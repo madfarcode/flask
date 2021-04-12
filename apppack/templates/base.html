@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon2.png')}}" type="image/x-icon">
+    <title>Web App</title>
+</head>
+
+<body>
+    <style>
+body {
+  background-color: #daebf0;
+  font-family: "Lato", sans-serif;
+  color: #ffffff;
+  text-align: center;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+a:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+article {
+  width: 80%;
+  text-align: start;
+  margin-left: 10%;
+  margin-bottom: 10%;
+  margin-top: 10%;
+}
+
+p {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: medium;
+}
+
+input {
+  background-color:#ffffff;
+  color:#272f32;
+  border-radius: 3px;
+  font-weight: bold;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+label {
+  color: white;
+  font-size: bold;
+}
+
+span {
+  display: contents;
+  color: #272f32;
+}
+
+h1 {
+  margin-top: 20px;
+  color:#272f32;
+}
+h2 {
+  padding: 5px;
+  background-color: #e84338;
+  border-radius: 10px;
+  font-size: large;
+}
+
+h3 {
+  margin-top: 80px;
+  margin-right: 10%;
+  margin-left: 10%;
+  padding: 1em;
+  background-color: #e84338;
+  border-radius: 10px;
+}
+
+button {
+  width: 30%;
+  height: 25px;
+  background-color:#ffffff;
+  color: #272f32;
+  margin-top:25px;
+  margin-bottom: 25px
+}
+
+#spanerr {
+  display: none;
+}
+
+#spantrue {
+  display: none;
+}
+
+#spanmanq {
+  display: none;
+}
+
+.header {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 120px;
+  width: 100%;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-top: 0px;
+  background-color: #272f32;
+  border-radius: 10px;
+}
+.header__blocks {
+  height: 120px;
+  width: 20%;
+}
+.pic_header{
+  width: 50px;
+  height: 50px;
+  margin-top: 35px;
+  border-radius: 100%;
+  transition: transform 350ms;
+  transform: translateX(0);
+}
+.pic_header:hover {
+  text-decoration: overline #ffffff;
+  transform: translateX(-6px);
+}
+
+.header__blocksbis {
+  height: 120px;
+  width: 10%;
+}
+.header__blocksbis__text {
+  font-weight: bold;
+  width: 100%;
+  font-size: 20px;
+  height: fit-content;
+  margin-top: 45px;
+  transition: transform 350ms;
+  transform: translateX(0);
+}
+.header__blocksbis__text:hover {
+  text-decoration: underline overline #ffffff;
+  transform: translateX(-6px);
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  width: 75%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  margin-top: 30px;
+  background-color: #e84338;
+  font-size: 20px;
+  border-radius: 10px;
+  transition: transform 600ms cubic-bezier(0.53, 0.13, 0.35, 0.62);
+  transform: scale(1);
+}
+.navbar:hover {
+  transform: scale(1.01);
+}
+.navbar__blocks {
+  height: 80px;
+  width: 16.6666666667%;
+}
+.navbar__blocks__navtxt {
+  cursor: pointer;
+  height: fit-content;
+  width: 100%;
+  margin-top: 13px;
+  font-weight: bold;
+  transition: transform 350ms;
+  transform: translateX(0);
+}
+.navbar__blocks__navtxt:hover {
+  text-decoration: overline #ffffff;
+  transform: translateX(-6px);
+}
+
+.articleSection {
+  display: flex;
+  flex-direction: column;
+  height: 1200px;
+  width: 85%;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+  margin-bottom: 30px;
+  margin-top: 60px;
+  border-radius: 10px;
+  
+}
+
+table {
+    width: 80% ;
+    height:fit-content;
+    border-radius: 10px;
+    margin-left: 10%;
+}
+td {
+    padding:1rem;
+}
+tr {
+    margin-top: 20px;
+}
+th {
+    padding:1rem;
+
+    
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    border-radius: 10px;
+    height: fit-content;
+    width : 20%;
+    margin-left: 40%;
+    color:#ffffff;
+}
+#formsub {
+  background-color:#e84338;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  margin-top: 30px;
+  border-radius: 10px;
+  height: 500px;
+  width : 30%;
+  margin-left: 35%;
+  color: #ffffff;
+
+}
+.falseinput {
+  background-color: rgba(233, 73, 73, 0.719);
+  color: white;
+}
+.remember{
+  display: flex;
+  flex-direction: row;
+  padding: 0.8rem;
+  background-color:#272f32;
+  width: 50%;
+  margin-left: 22%;
+  border-radius: 10px;
+}
+.link {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.pic {
+  width: 17%;
+  height: 200px;
+  border-radius: 100%;
+  margin-left: 41.5%;
+}
+.post {
+  display: flex;
+  flex-direction: column;
+  width:80%;
+  height: fit-content;
+  margin-left:10%;
+  background-color: #272f32;
+  margin-bottom: 30px;
+  border-radius:40px;
+  transition: transform 350ms;
+  transform: translateX(0);
+}
+
+.post:hover {
+  transform: translateX(+12px);
+}
+
+.post_header {
+  display: flex;
+  flex-direction:row;
+  width: 100%;
+  height: 60px;
+  margin-top: 25px;
+}
+.post_header_block {
+  width: 10%;
+  height: 100%;
+}
+.pic_header_post {
+  width:60px;
+  height:60px;
+  border-radius:100%
+}
+.post_header_block_textes {
+  width: fit-content;
+  margin-top: 17px;
+}
+.post_block_content {
+  height: 60%;
+  width:90%;
+  margin-left: 5%;
+  text-align: left;
+
+}
+
+
+
+
+
+    </style>
+
+        <div class="header">
+            <a href="Index.html"><div class="header__blocks"><a href="/"><img src="{{ url_for('static', filename='img/Fichier1.svg')}}" alt="Logo" height="100%" width="100%"></a></div>
+            <div class="header__blocks"></div>
+            <div class="header__blocks"></div>
+            <div class="header__blocksbis"></div>
+            <div class="header__blocksbis"></div>
+            {% if current_user.is_authenticated %}
+            <div class="header__blocksbis"><a href="/post/new"><div class="header__blocksbis__text">New Post</div></a></div>
+            <div class="header__blocksbis"><a href="/account/"><div class="header__blocksbis__text">{{ current_user.username }}</div></a></div>
+            <a href="/account/"><div class="header__blocksbis"><a href="/account/"><img class='pic_header' src="{{ image_file }}" alt="Logo" height="100%" width="100%"></a></div>
+            <div class="header__blocksbis"><a href="/logout/"><div class="header__blocksbis__text">&#10149;  logout</div></a></div>
+            {% else %}
+            <div class="header__blocksbis"><a href="/login/"><div class="header__blocksbis__text">&#10149;  Connect</div></a></div>
+            <div class="header__blocksbis"><a href="/Subscribe/"><div class="header__blocksbis__text">&#10149;  Subscribe</div></a></div>
+            {% endif %}
+        </div>
+    
+        <div class="navbar">
+            <div class="navbar__blocks"><a href="/"><div class="navbar__blocks__navtxt">Task    &#11167;</div></a></div>
+            <div class="navbar__blocks"><a href="forum.html"><div class="navbar__blocks__navtxt">Forum  	  &#11167;</div></a></div>
+            <div class="navbar__blocks"><a href="ChatRoom.html"><div class="navbar__blocks__navtxt">ChatRoom    &#11167;</div></a></div>
+            <div class="navbar__blocks"><a href="Pagecreator.html"><div class="navbar__blocks__navtxt">Page creator    &#11167;</div></a></div>
+            <div class="navbar__blocks"><a href="JS.html"><div class="navbar__blocks__navtxt">JS    &#11167;</div></a></div>
+            <div class="navbar__blocks"><a href="FAQ.html"><div class="navbar__blocks__navtxt">F.A.Q    &#11167;</div></a></div>
+            
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <h3>
+              {{ message }}
+            </h3>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+        <div class="articleSection">
+          {% block body %}{% endblock %}
+        </div>
+</body>
+</html>

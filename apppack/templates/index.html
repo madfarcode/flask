@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Posts</h1>
+    {% for post in posts %}
+        <div class="post">
+            <div class="post_header">
+                <div class='post_header_block'><img class='pic_header_post' src="{{ url_for('static', filename='img/' + post.author.image_file) }}" alt=""></div>
+                <div class='post_header_block'><div class='post_header_block_textes'><a href="#">{{ post.author.username }}</a></div></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'></div>
+                <div class='post_header_block'><div class='post_header_block_textes'><small id='post_header_block_textes_dates'>{{ post.date_posted.strftime('%Y-%m-%d') }}</small></div></div>
+            </div>
+            <br>
+            <p><div class='post_block_content'>{{ post.content }}</div></p>
+        </div>
+    {% endfor %}
+{% endblock %}

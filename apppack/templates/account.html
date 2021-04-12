@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Your Account :</h1>
+<br>
+<img class= "pic" src="{{ image_file }}" alt="">
+<br>
+<h2>User name  : {{ current_user.username }}</h2>
+<br>
+<h2>Email adress : {{ current_user.email }}</h2>
+<br>
+<h1> Upadate :</h1>
+
+    <form method="POST" action="" id="formsub" enctype="multipart/form-data">
+        <br>
+        {{ forms.hidden_tag() }}
+
+        {{ forms.picture.label }}
+        
+        {% if forms.picture.errors %}
+            {{ forms.picture(class='falseinput') }}
+                {% for error in forms.username.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.picture }}
+        
+        {% endif %}
+
+        <br>
+        {{ forms.username.label }}
+        
+        {% if forms.username.errors %}
+            {{ forms.username(class='falseinput') }}
+                {% for error in forms.username.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.username }}
+        
+        {% endif %}
+
+        <br>
+        {{ forms.email.label }}
+        
+        {% if forms.email.errors %}
+            {{ forms.email(class='falseinput') }}
+                {% for error in forms.email.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.email }}
+        
+        {% endif %}
+        <br>
+        {{ forms.submit }}
+        <br>
+
+    </form>
+
+
+
+
+{% endblock %}

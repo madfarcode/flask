@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<h1> Log in : </h1>
+
+
+    <form method="POST" action="" id="formsub">
+        {{ forms.hidden_tag() }}
+        <br>
+        {{ forms.email.label }}
+        
+        {% if forms.email.errors %}
+            {{ forms.email(class='falseinput') }}
+                {% for error in forms.email.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.email }}
+        
+        {% endif %}
+        
+        <br>
+        {{ forms.password.label }}
+        
+        {% if forms.password.errors %}
+            {{ forms.password(class='falseinput') }}
+                {% for error in forms.password.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.password }}
+        
+        {% endif %}
+    
+        <br>
+        <div class="remember">
+        {{ forms.remember }}{{ forms.remember.label }}
+        </div>
+        <br>
+        {{ forms.submit }}
+        <br>
+        <a href="" class='link'>Forgot your password ?</a>
+        
+        <a href="" class='link'>Don't have any account yet ?</a>
+        <br>
+
+    </form>
+{% endblock %}

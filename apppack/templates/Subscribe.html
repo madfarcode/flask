@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<h1> Subscribe : </h1>
+
+    <form method="POST" action="" id="formsub">
+        <br>
+        {{ forms.hidden_tag() }}
+
+        {{ forms.username.label }}
+        
+        {% if forms.username.errors %}
+            {{ forms.username(class='falseinput') }}
+                {% for error in forms.username.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.username }}
+        
+        {% endif %}
+
+        <br>
+        {{ forms.email.label }}
+        
+        {% if forms.email.errors %}
+            {{ forms.email(class='falseinput') }}
+                {% for error in forms.email.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.email }}
+        
+        {% endif %}
+        
+        <br>
+        {{ forms.password.label }}
+        
+        {% if forms.password.errors %}
+            {{ forms.password(class='falseinput') }}
+                {% for error in forms.password.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.password }}
+        
+        {% endif %}
+        
+        <br>
+        {{ forms.confirm_password.label }}
+        {% if forms.confirm_password.errors %}
+            {{ forms.confirm_password(class='falseinput') }}
+                {% for error in forms.confirm_password.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.confirm_password }}
+        
+            {% endif %}
+        <br>
+        {{ forms.submit }}
+        <br>
+
+    </form>
+
+{% endblock %}
