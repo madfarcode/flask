@@ -63,3 +63,20 @@ class PostForm(FlaskForm):
     title = StringField('Title')
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class RequestRestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired])
+    submit = SubmitField('Request Passwor Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError("Sorry we cannot found any trace of this email in our database")
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequierd()])
+    confirm_password = PasswordField('ConfirmPassword', validators=[DataRequired(), equalTo('password')])
+    submit = SubmitField('Reset Password')
+    
+
+

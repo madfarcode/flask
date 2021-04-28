@@ -1,11 +1,12 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, request, redirect, flash
-from apppack import app, db, bcrypt
-from apppack.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from flask import render_template, url_for, request, redirect, flash, abort
+from apppack import app, db, bcrypt, mail
+from apppack.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestRestForm, ResetPasswordForm
 from apppack.models import User, Post, Todo
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 @app.route('/base/')
 def base():
@@ -15,7 +16,8 @@ def base():
 @app.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('index.html', posts=posts, image_file=image_file)
 
@@ -131,3 +133,87 @@ def post_new():
         flash('Your post HAs been created !' , 'success')
         return redirect('/')
     return render_template('create_post.html', forms=forms, image_file=image_file)
+
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+   
+
+@app.route("/post/<int:post_id>/update", methods=['POST', 'GET'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    forms = PostForm()
+    if forms.validate_on_submit():
+        post.title = forms.title.data
+        post.content = forms.content.data
+        db.session.commit()
+        flash('Yourpost has been updated')
+        return redirect(url_for('post', post_id=post.id))
+    forms.title.data = post.title
+    forms.content.data = post.content
+
+    return render_template('update_post.html', forms=forms)
+
+@app.route("/post/<int:post_id>/delete", methods=['POST', 'GET'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash("Your post has been deleted")
+    return redirect('/')
+
+@app.route("/user/<username>", methods=['POST', 'GET'])
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(page=page, per_page=5)
+    image_file = url_for('static', filename='img/' + current_user.image_file)
+    return render_template('userposts.html', posts=posts, post=post, user=user, image_file=image_file)
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request', sender='jqlabweb@gmail.com', recipients=[user.email])
+    msg = f'''
+    To reset your password, visit the following link:
+    
+    {url_for('reset_token', token=token, _external=True )}
+
+    If you did not make this request then simply ignore this email
+    
+    '''
+
+
+
+
+
+@app.route("/reset_password", methods=['POST', 'GET')]
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect('/')
+    forms = RequestRestForm()
+    if forms.validate_on_submit():
+        user = User.query.filter_by(email=forms.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your pasword')
+        return redirect('/login/')
+    return render render_template('reset_request.html', forms=forms)
+
+
+@app.route("/reset_password/<token>", methods=['POST', 'GET')]
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect('/')
+    user = User.verify_reset_token(token):
+    if user is None:
+        flash('That is an invalid or expired token. Please try again')
+    forms = ResetPasswordForm()
+    return render_template('reset_token.html', forms=forms)

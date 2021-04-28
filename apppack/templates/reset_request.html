@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<h1> Request Reset </h1>
+
+
+    <form method="POST" action="" id="formsub">
+        {{ forms.hidden_tag() }}
+        <br>
+        {{ forms.email.label }}
+        
+        {% if forms.email.errors %}
+            {{ forms.email(class='falseinput') }}
+                {% for error in forms.email.errors %}
+                    <legend>{{ error }}</legend>
+                {% endfor %}
+        {% else %}
+            {{ forms.email }}
+        
+        {% endif %}
+
+        <br>
+        {{ forms.submit }}
+        <br>
+
+    </form>
+{% endblock %}
